@@ -17,7 +17,11 @@
           Dropdown
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" <%=link_to "Create New Project",new_project_path%></a>
+        <%if user_signed_in? %>
+            <a class="dropdown-item" <%=link_to "Create New Project",new_project_path%></a>
+        <%else%>
+            <a class="dropdown-item" <%=link_to "All projects",projects_path%></a>
+        <%end%>
           <a class="dropdown-item" href="#">Another action</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
@@ -26,10 +30,28 @@
       <li class="nav-item">
         <a class="nav-link disabled" href="#">Disabled</a>
       </li>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-0 my-sm-0" type="submit">Search</button>
+        </form>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <ul class="navbar-nav mr-5">
+      <%if user_signed_in? %>
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%=current_user.name.capitalize%>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" <%=link_to "Edit Your Profile",edit_user_registration_path%></a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" <%=link_to "Logout" ,destroy_user_session_path, data:{"turbo-method": :delete},method: :delete %></a>
+            </div>
+          </li>
+        <%else%>
+          <li class="nav-item active">
+            <a class="nav-link" <%=link_to "Login", new_user_session_path%></a>
+          </li>
+        <%end%>
+    </ul>
   </div>
 </nav>
