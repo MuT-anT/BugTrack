@@ -1,0 +1,16 @@
+<%=render 'shared/page_title', title: "#{@project.title}"%>
+<br>
+<hr/>
+
+    <br>
+    <h3>Description:</h3>
+    <p><%=simple_format(@project.description)%></p>
+    <div class="text-end">
+            <%=link_to "Edit your Project", edit_project_path, class: "btn btn-primary btn-md btn-xlarge" %>
+            <%=link_to "Delete this Project", project_path(@project), class:"btn btn-primary btn-xs btn-xlarge", 
+            data: {"turbo-method": :delete}, method: :delete%>
+    </div>
+
+    
+
+

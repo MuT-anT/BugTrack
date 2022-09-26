@@ -1,0 +1,17 @@
+@import "bootstrap";
+
+
+.jumbotron {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: whitesmoke;
+    border-radius: .3rem;
+  }
+
+.jumbotron h1,h2{
+    color: black;
+    margin-bottom: 30px;
+    font-weight: bolder;
+    letter-spacing: -1px;
+    text-align: center;
+  }

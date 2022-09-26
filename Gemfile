@@ -71,5 +71,9 @@ group :test do
   gem "webdrivers"
 end
 
+
+gem 'bootstrap', '~> 5.2.0'
+gem 'bootstrap-sass'
+
 gem 'devise', '~> 4.8', '>= 4.8.1'
 
