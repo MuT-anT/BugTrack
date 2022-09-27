@@ -15,6 +15,7 @@ class ProjectsController < ApplicationController
                 flash[:success]="Project was created Successfully"
                 redirect_to projects_path
             else
+                flash[:danger]="Only a manager can create a Project"
                 render 'new' , status: :unprocessable_entity
             end
     end

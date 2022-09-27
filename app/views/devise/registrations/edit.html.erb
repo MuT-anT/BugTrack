@@ -31,6 +31,20 @@
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
 
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-6">
+      <%= f.label :Role %>&nbsp;&nbsp;&nbsp;
+      <%= f.radio_button :usertype, "Manager" %>
+      <%= f.label :usertype, "Manager" %>&nbsp;&nbsp;&nbsp;
+      <%= f.radio_button :usertype, "Developer" %>
+      <%= f.label :usertype, "Developer" %>&nbsp;&nbsp;&nbsp;
+      <%= f.radio_button :usertype, "QA" %>
+      <%= f.label :usertype, "QA" %>
+      </div>
+    </div>
+  </div>
+
   <div class="actions">
     <%= f.submit "Update" %>
   </div>

@@ -1,9 +1,11 @@
 
 <div class="jumbotron center">
-  <h1 class="display-4">Welcome to My Recipes</h1>
-  <h2 class="lead">The App where you can find the best Recipes</h2>
+  <h1 class="display-4">Welcome to the Bug Tracking System</h1>
+  <h2 class="lead">The App that helps you to solve your bugs</h2>
   <hr class="my-4">
-  <p>Sign Up<p>
+  <%if !user_signed_in? %>
+    <h4 align="center"><%=link_to "Sign Up",new_user_registration_path%></h4>
+  <%end%>
 </div>
 
 <div class="row">

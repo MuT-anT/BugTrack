@@ -75,7 +75,9 @@ end
 gem 'bootstrap', '~> 5.2.0'
 gem 'bootstrap-sass'
 
-gem 'devise', '~> 4.8', '>= 4.8.1'
+gem 'devise'
 
 gem "cancan"
+
+gem 'carrierwave', '~> 2.0'
 
