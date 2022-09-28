@@ -6,6 +6,11 @@ class ProjectsController < ApplicationController
     
     def new
         @project=Project.new
+        if can? :create,@project    
+        else
+            flash[:alert]="You are not allowed to create a project"
+            redirect_to root_path
+        end
     end
     
     def create
@@ -15,13 +20,18 @@ class ProjectsController < ApplicationController
                 flash[:success]="Project was created Successfully"
                 redirect_to projects_path
             else
-                flash[:danger]="Only a manager can create a Project"
                 render 'new' , status: :unprocessable_entity
             end
+
     end
     
     def edit
         @project=Project.find(params[:id])
+        if can? :edit,@project
+        else
+            flash[:alert]="You are not allowed to edit the project"
+            redirect_to projects_path(@project)
+        end
     end
     
     def update

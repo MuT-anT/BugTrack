@@ -9,9 +9,11 @@
       <li class="nav-item active">
         <a class="nav-link" <%=link_to "Home",root_path%> <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" <%=link_to "Your Profile",user_path(current_user)%> <span class="sr-only">(current)</span></a>
-      </li>
+      <%if user_signed_in?%>
+        <li class="nav-item active">
+            <a class="nav-link" <%=link_to "Your Profile",user_path(current_user)%> <span class="sr-only">(current)</span></a>
+        </li>
+      <%end%>  
       <li class="nav-item active">
         <a class="nav-link" <%=link_to "Projects", projects_path%></a>
       </li>
@@ -20,7 +22,7 @@
           Dropdown
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <%if user_signed_in? %>
+        <%if user_signed_in? && current_user.usertype=='Manager' %>
             <a class="dropdown-item" <%=link_to "Create New Project",new_project_path%></a>
         <%else%>
             <a class="dropdown-item" <%=link_to "All projects",projects_path%></a>
@@ -39,7 +41,7 @@
         </form>
     </ul>
     <ul class="navbar-nav mr-5">
-      <%if user_signed_in? %>
+      <%if user_signed_in?%>
           <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <%=current_user.name.capitalize%>

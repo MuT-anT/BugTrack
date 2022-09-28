@@ -7,13 +7,13 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :name, presence: true
 
-  has_many :created_projects,class_name: "Project", foreign_key: "creator_id"
+  has_many :created_projects,class_name: "Project", foreign_key: "creator_id", dependent: :destroy
 
-  has_many :created_bugs, class_name: "Bug",foreign_key: "creator_id"
-  has_many :solved_bugs, class_name: "Bug",foreign_key: "solver_id"
+  has_many :created_bugs, class_name: "Bug",foreign_key: "creator_id" , dependent: :destroy
+  has_many :solved_bugs, class_name: "Bug",foreign_key: "solver_id" , dependent: :destroy
 
-  has_many :user_projects
-  has_many :projects , through: :user_projects
+  has_many :user_projects ,dependent: :destroy
+  has_many :projects , through: :user_projects,dependent: :destroy
 
   enum usertype: {
     Manager: 0,

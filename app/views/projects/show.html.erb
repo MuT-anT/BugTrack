@@ -1,4 +1,4 @@
-<%=render 'shared/page_title', title: "#{@project.title}"%>
+<%=render 'shared/page_title', title: "Project Title: #{@project.title.capitalize}"%>
 <br>
 <hr/>
 
@@ -6,13 +6,17 @@
     <h3>Description:</h3>
     <p><%=simple_format(@project.description)%></p>
     <p><small>Created By:   <%=link_to @project.Creator.name.capitalize,user_path(@project.Creator)%><small></p>
-    <div class="text-end">
-            <%=link_to "Edit your Project", edit_project_path, class: "btn btn-primary btn-md btn-xlarge" %>
-            <%=link_to "Delete this Project", project_path(@project), class:"btn btn-primary btn-xs btn-xlarge", 
-            data: {"turbo-method": :delete}, method: :delete%>
-    </div>
+    <%if user_signed_in? && current_user.usertype=='Manager'%>
+        <div class="text-end">
+                <%=link_to "Edit your Project", edit_project_path, class: "btn btn-primary btn-md btn-xlarge" %>
+                <%=link_to "Delete this Project", project_path(@project), class:"btn btn-primary btn-xs btn-xlarge", 
+                data: {"turbo-method": :delete}, method: :delete%>
+        </div>
+    <%end%>
+    <%if user_signed_in? && current_user.usertype=='QA'%>
+        <div class="text-center">
+            <%=link_to "Create a Bug", new_project_bug_path(@project), class: "btn btn-primary btn-md btn-xlarge"%>
+        </div>
+    <%end%>    
 <hr/>
-
-
-
 
