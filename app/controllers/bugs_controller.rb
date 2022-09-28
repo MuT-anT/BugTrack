@@ -23,7 +23,8 @@ class BugsController < ApplicationController
     def create
         @bug=Bug.new(bug_params)
         @bug.creator_id=current_user.id
-        @bug.solver_id=User.find(params[:id:10])
+        @developer=User.find_by(usertype: "Developer")
+        @bug.solver_id=@developer.id
         @project=Project.find_by(params[:project_id])
         @bug.project_id=@project.id
         @titles=Project.find(@bug.project_id).bugs
