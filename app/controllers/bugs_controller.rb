@@ -1,13 +1,7 @@
 class BugsController < ApplicationController
 
     def index
-        if @current_user.usertype=='Manager'
-            @bugs=current_user.bugs
-        elsif @current_user.usertype=='Developer'
-            @bugs=current_user.solved_bugs
-        elsif @current_user.usertype=='QA'
-            @bugs=current_user.created_bugs
-        end
+
     end
 
     def new
@@ -23,29 +17,40 @@ class BugsController < ApplicationController
     def create
         @bug=Bug.new(bug_params)
         @bug.creator_id=current_user.id
-        @developer=User.find_by(usertype: "Developer")
+        @developer=User.where(usertype: "Developer")
         @bug.solver_id=@developer.id
         @project=Project.find_by(params[:project_id])
         @bug.project_id=@project.id
         @titles=Project.find(@bug.project_id).bugs
             if @bug.save
                 flash[:success]="Bug was created successfully"
-                redirect_to projects_path(@project)
+                redirect_to project_path(@project)
             else 
                 render 'new', status: :unprocessable_entity
             end
     end
 
     def show
-        @bugs=Bug.find(params[:id])
+        @bug=Bug.find(params[:id])
     end
 
     def edit
-
+        @bug=Bug.find(params[:id])
+        if can? :update,Bug
+        else
+            flash[:alert]="You cannot update this bug"
+            redirect_to bug_path(@bug)
+        end
     end
 
     def update
-
+        @bug=Bug.find(params[:id])
+        if @bug.update(bug_params)
+            flash[:success]="Recipe was updates successfully"
+            redirect_to bug_path(@bug)
+        else
+            render 'edit' , status: :unprocessable_entity
+        end
     end
 
     def destroy

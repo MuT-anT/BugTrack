@@ -1,7 +1,20 @@
 class ProjectsController < ApplicationController
 
+    before_action :require_same_user, only: [:edit,:update,:destroy]
+
     def index
-        @projects=Project.all
+        if user_signed_in?
+            if current_user.usertype=='Manager'
+                @project=current_user.created_projects
+            elsif current_user.usertype=='Developer'
+                @project=current_user.assigned_projects
+            elsif current_user.usertype=='QA'
+                @project=current_user.assigned_projects
+            end
+        else
+            flash[:alert]="You need to login to view your Projects"
+            redirect_to root_path
+        end
     end
     
     def new
@@ -33,6 +46,7 @@ class ProjectsController < ApplicationController
             redirect_to projects_path(@project)
         end
     end
+
     
     def update
         @project=Project.find(params[:id])
@@ -49,15 +63,21 @@ class ProjectsController < ApplicationController
     end
     
     def destroy
-        @project=Project.find(params[:id]).destroy
-        flash[:success]="Project was deleted successfully"
-        redirect_to projects_path , status: :see_other
+        if can? :destroy,Project
+            @project=Project.find(params[:id]).destroy
+            flash[:success]="Project was deleted successfully"
+            redirect_to projects_path , status: :see_other
+        end
     end
     
     private
     
     def project_params
-        params.require(:project).permit(:title,:description)
+        params.require(:project).permit(:title,:description,user_ids: [])
+    end
+
+    def require_same_user
+    
     end
     
     

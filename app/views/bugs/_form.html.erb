@@ -18,15 +18,22 @@
                 </div>
             </div>
             <div class="form-group">
-                <div>
-                    <div class="control-label col-md-8">
-                        <%=f.label :deadline%>
-                    </div>
-                    <div class="col-md-2">
-                        <%=f.date_field :deadline, class: "form-control",placeholder: "Enter deadline"%>
-                    </div>
+                <div class="control-label col-md-8">
+                    <%=f.label :deadline%>
+                </div>
+                <div class="col-md-2">
+                    <%=f.date_field :deadline, class: "form-control",placeholder: "Enter deadline"%>
+                </div>
             </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-8">
+                    <%=form_with(model: @developer) do |f|%>
+                        <%f.select :id, @developer.map {|c|[c.name,c.id]} %>
+                    <%end%>
+                </div>
             </div>
+
             <div class="form-group">
                 <div class="control-label col-md-8">
                     <%=f.label :screenshot%>
@@ -43,8 +50,6 @@
                     <%= f.select :bug_type, ["Bug","Feature"] %>
                 </div>
             </div>
-
-            <%= f.hidden_field :project_id, value: params['project_id'] %>
             
             <div class="form-group">
                 <div class="control-label col-md-4">
@@ -59,7 +64,11 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-12">
                     <%=f.submit class: "btn btn-primary btn-md btn-xlarge"%>
-                    <%=link_to "Return to Projects listing", projects_path, class: "btn btn-primary btn-md btn-xlarge"%>
+                    <%if @bug.new_record? %>
+                        <%=link_to "Return", project_path(@project), class: "btn btn-primary btn-md btn-xlarge"%>
+                    <%else%>
+                        <%=link_to "Return", project_path(@bug.project), class: "btn btn-primary btn-md btn-xlarge"%>
+                    <%end%>
                 </div>
             </div>
         <%end%>
