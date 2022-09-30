@@ -59,7 +59,14 @@ class ProjectsController < ApplicationController
     end
     
     def show
-        @project=Project.find(params[:id])
+        if user_signed_in?
+            if can? :show,Project
+            @project=Project.find(params[:id])
+            end
+        else 
+            flash[:alert]="Sorry you need to login first"
+            redirect_to root_path
+        end
     end
     
     def destroy

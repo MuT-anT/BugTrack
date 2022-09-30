@@ -9,8 +9,8 @@ class User < ApplicationRecord
 
   #many to many relation between users and projects
 
-  has_many :user_projects
-  has_many :assigned_projects , through: :user_projects,source: :project
+  has_many :user_projects, dependent: :destroy
+  has_many :assigned_projects , through: :user_projects,source: :project,dependent: :destroy
 
   #one to many relation between users and projects
 

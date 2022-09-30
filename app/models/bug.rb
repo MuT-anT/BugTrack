@@ -1,12 +1,12 @@
 class Bug< ApplicationRecord
-    validates :title,presence: true
+    validates :title,presence: true , uniqueness: { scope: :project_id }
     validates :bug_status, presence: true
     validates :bug_type, presence: true
 
     belongs_to :project
 
     belongs_to :Bug_creator, class_name: "User", foreign_key: "creator_id"
-    belongs_to :Solver, class_name: "User", foreign_key: "solver_id"
+    belongs_to :Bug_solver, class_name: "User", foreign_key: "solver_id"
 
 
     mount_uploader :image, FileUploader

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <%= form_for(@bug, :html => {class: "form-horizontal",role: "form"}) do |f|%>
+        <%= form_for(@bug, :html => {class: "form-horizontal",role: "form"},url: project_bugs_path) do |f|%>
             <div class="form-group">
                 <div class="control-label col-md-8">
                     <%=f.label :title%>
@@ -26,11 +26,13 @@
                 </div>
             </div>
 
+
             <div class="form-group">
-                <div class="control-label col-md-8">
-                    <%=form_with(model: @developer) do |f|%>
-                        <%f.select :id, @developer.map {|c|[c.name,c.id]} %>
-                    <%end%>
+                <div class="control-label col-md-2">
+                    <%= f.label :Assign_Developers%>
+                </div>
+                <div class="col-md-8">
+                    <%=f.select(:solver_id,@developers.collect{|p|[ p.name,p.id]},{:prompt=>""})%>
                 </div>
             </div>
 
@@ -46,7 +48,7 @@
             <br>
             <div class="form-group">
                 <div class="col-md-6">
-                    <%= f.label :BugType %>&nbsp;&nbsp;&nbsp;
+                    <%= f.label :BugType %>&emsp;
                     <%= f.select :bug_type, ["Bug","Feature"] %>
                 </div>
             </div>
@@ -59,8 +61,6 @@
                     <%= f.select :bug_status, ["New", "Started", "Completed"] %>
                 </div>
             </div>
-
-            
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-12">
                     <%=f.submit class: "btn btn-primary btn-md btn-xlarge"%>

@@ -8,5 +8,6 @@ protected
     devise_parameter_sanitizer.permit(:account_update, keys: [:name,:email,:password,:current_password,:usertype])
   end
   
+  
 
 end

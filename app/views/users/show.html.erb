@@ -36,11 +36,11 @@
     <% @user_solbugs.each do |bug|%>
     <br><br>
     <div class="row">
-        <div class="col-md-8 well">
-            <h4><%=link_to bug.title, bug_path(bug)%></h4>
+        <div class="col-md-12 well">
+            <h4><%=link_to bug.title, project_bug_path(bug)%></h4>
             <br>
             <p>
-                <div class="float-end"><span class="quiet"><small>Solved <%= time_ago_in_words(bug.created_at) %> ago by <%=bug.Solver.name.capitalize%></small></span></div>
+                <div class="float-end"><span class="quiet"><small>Solved <%= time_ago_in_words(bug.created_at) %> ago by <%=bug.Bug_solver.name.capitalize%></small></span></div>
             </p>
             <p><%=truncate(bug.description, length: 70)%></p>
         </div>
@@ -48,27 +48,26 @@
 <%end%>
 
 <%elsif @user.usertype=='QA'%>
-    <%=render 'shared/page_title', title: "#{@user.name.capitalize}'s Bugs"%>
-    <hr/><br>
-    <h3>Role: <%= @user.usertype%></h3>
-    <br>
-    <h5 align="center">Bugs Created By: <%=@user.name.capitalize%></h5>
-    <% @user_createdbugs.each do |bug|%>
-        <br><br>
-        <div class="row">
-            <div class="container">
-                <div class="col-md-10 well">
-                    <h4><%=link_to bug.title, bug_path(bug)%></h4>
-                    <br>
-                    <p>
-                        <div class="float-end"><span class="quiet"><small>Created <%= time_ago_in_words(bug.created_at) %> ago by <%=bug.Bug_creator.name.capitalize%></small></span></div>
-                    </p>
-                    <p><%=truncate(bug.description, length: 70)%></p>
-                    <p><div class="float-end"><strong>Deadline: </strong><%=bug.deadline%></div></p> 
-                </div>
+<%=render 'shared/page_title', title: "#{@user.name.capitalize}'s Bugs"%>
+<hr/><br>
+<h3>Role: <%= @user.usertype%></h3>
+<br>
+<h5 align="center">Bugs Created By: <%=@user.name.capitalize%></h5>
+<% @user_createdbugs.each do |bug|%>
+    <br><br>
+    <div class="row">
+        <div class="container">
+            <div class="col-md-10 well">
+                <h4><%=link_to bug.title, project_bug_path(bug.project_id,bug)%></h4>
+                <br>
+                <p>
+                    <div class="float-end"><span class="quiet"><small>Created <%= time_ago_in_words(bug.created_at) %> ago by <%=bug.Bug_creator.name.capitalize%></small></span></div>
+                </p>
+                <p><%=truncate(bug.description, length: 70)%></p>
             </div>
         </div>
-    <%end%>
+    </div>
+<%end%>
 <%end%>
 
 

@@ -10,5 +10,4 @@ Rails.application.routes.draw do
     resources :bugs
   end
 
-  resources :bugs
 end

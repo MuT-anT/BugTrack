@@ -1,20 +1,33 @@
-<%=render 'shared/page_title', title: "Bug title: #{@bug.title}"%>
+<%=render 'shared/page_title', title: "jnfdjk"%>
 <hr/>
 
-<h3>Description:</h3>
-<p><%=simple_format(@bug.description)%></p>
-<%if @bug.image!=0%>
+<%if !@bug.description.blank?%>
+    <h3>Description:</h3>
+    <p><%=simple_format(@bug.description)%></p>
+<%end%>
+<%if @bug.image.blank? %>
+    <h3>NO IMAGE UPLOADED</h3>
+<%else%>
     <h3>Bug Image: </h3>
     <p align="center"><img src="<%=@bug.image%>"width="400" height="400"</p>
 <%end%>
 <p><strong>Type: </strong><%=@bug.bug_type%></p>
 <p><strong>Status: </strong><%=@bug.bug_status%></p>
-<p><strong>Deadline: </strong><%=@bug.deadline%></p>
+<%if !@bug.deadline.blank?%>
+    <p><strong>Deadline: </strong><%=@bug.deadline%></p>
+<%end%>
 <p><small>Created By:   <%=link_to @bug.Bug_creator.name.capitalize,user_path(@bug.Bug_creator)%><small></p>
 <%if user_signed_in? && (current_user.usertype=='QA' && current_user.id==@bug.creator_id)%>
     <div class="text-end">
-            <%=link_to "Edit this Bug", edit_bug_path, class: "btn btn-primary btn-md btn-xlarge" %>
-            <%=link_to "Delete this Bug", bug_path(@bug), class:"btn btn-primary btn-xs btn-xlarge", 
+            <%=link_to "Edit this Bug", edit_project_bug_path, class: "btn btn-primary btn-md btn-xlarge" %>
+            <%=link_to "Delete this Bug", project_bug_path(@bug), class:"btn btn-primary btn-xs btn-xlarge", 
             data: {"turbo-method": :delete}, method: :delete%>
     </div>
 <%end%>
+<%if user_signed_in? && (current_user.usertype=='Developer' && current_user.id==@bug.solver_id)%>
+    <div class="text-end">
+        <%=link_to "Edit this Bug", edit_project_bug_path, class: "btn btn-primary btn-md btn-xlarge" %>
+    </div>
+<%end%>
+<br><hr/>
+<div class="text-center"><%=link_to "Return", project_path(@bug.project), class: "btn btn-primary btn-md btn-xlarge"%></div>

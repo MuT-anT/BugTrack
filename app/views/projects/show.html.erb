@@ -6,7 +6,7 @@
 <h3>Description:</h3>
 <p><%=simple_format(@project.description)%></p>
 <br>
-<p><small>Created By:   <%=link_to @project.Creator.name.capitalize,user_path(@project.Creator)%><small></p>
+<p><small>Created By:   <%=@project.Creator.name.capitalize%><small></p>
 <%if user_signed_in? && (current_user.usertype=='Manager' && current_user.id==@project.creator_id)%>
     <div class="text-end">
             <%=link_to "Edit your Project", edit_project_path, class: "btn btn-primary btn-md btn-xlarge" %>
@@ -20,14 +20,15 @@
     </div>
 <%end%>    
 <hr/>
-<%if @project.bugs.count != 0%>
+
+<%if @project.bugs.count != 0 %>
     <h2 align="center">Bugs created by QA: </h2>
     <% @project.bugs.each do |bug|%>
         <br><br>
         <div class="row">
             <div class="container">
                 <div class="col-md-12 well">
-                    <h4><%=link_to bug.title, bug_path(bug)%></h4>
+                    <h4><%=link_to bug.title, project_bug_path(@project, bug)%></h4>
                     <div class="float-end"><span class="quiet">Created <%= time_ago_in_words(bug.created_at) %> ago by <%=bug.Bug_creator.name.capitalize%></span></div>    
                 </div>
             </div>
