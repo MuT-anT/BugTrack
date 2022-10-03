@@ -48,19 +48,29 @@
             <br>
             <div class="form-group">
                 <div class="col-md-6">
-                    <%= f.label :BugType %>&emsp;
-                    <%= f.select :bug_type, ["Bug","Feature"] %>
+                    <%= f.label :BugType %> &emsp;
+                    <%= f.select :bug_type, ["feature","bug"], prompt: "Please select" , onchange: "this.form.submit()"%>
                 </div>
             </div>
-            
-            <div class="form-group">
-                <div class="control-label col-md-4">
-                    <%=f.label :status%>&emsp;
+            <%if @bug_type == 'bug'%>
+                <div class="form-group">
+                    <div class="control-label col-md-4">
+                        <%=f.label :status%>&emsp;
+                    </div>
+                    <div class="col-md-4">
+                        <%= f.select :bug_status, ["New", "Started", "Resolved"] %>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <%= f.select :bug_status, ["New", "Started", "Completed"] %>
+            <%else%>
+                <div class="form-group">
+                    <div class="control-label col-md-4">
+                        <%=f.label :status%>&emsp;
+                    </div>
+                    <div class="col-md-4">
+                        <%= f.select :bug_status, ["New", "Started", "Completed"] %>
+                    </div>
                 </div>
-            </div>
+            <%end%>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-12">
                     <%=f.submit class: "btn btn-primary btn-md btn-xlarge"%>

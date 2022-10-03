@@ -23,7 +23,7 @@
                     <%= f.label :Developers %>
                 </div>
                 <div class="col-md-8">
-                    <%=f.select(:user_ids,User.Developer.collect{|p|[ p.name,p.id]},{:prompt=>""},{:multiple=>true})%>
+                    <%=f.select(:user_ids,User.developer.collect{|p|[ p.name,p.id]},{:prompt=>""},{:multiple=>true})%>
                 </div>
             </div>
 
@@ -32,7 +32,7 @@
                     <%=f.label :QA%>
                 </div>
                 <div class="col-md-8">
-                    <%=f.select(:user_ids,User.QA.collect {|p|[p.name,p.id]},{:prompt=>""},{:multiple=>true})%>
+                    <%=f.select(:user_ids,User.qa.collect {|p|[p.name,p.id]},{:prompt=>""},{:multiple=>true})%>
                 </div>
             </div>
 

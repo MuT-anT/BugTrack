@@ -24,9 +24,9 @@ class User < ApplicationRecord
   has_many :bugs,through: :created_projects
 
   enum usertype: {
-    Manager: 0,
-    Developer: 1,
-    QA: 2
+    manager: 0,
+    developer: 1,
+    qa: 2
   }
 
 end

@@ -1,20 +1,16 @@
 class ProjectsController < ApplicationController
 
-    before_action :require_same_user, only: [:edit,:update,:destroy]
+    before_action :set_project, only: [:edit,:update,:show,:destroy]
+    before_action :authenticate_user!, only: [:index,:new,:show,:edit,:require_same_user]
 
     def index
-        if user_signed_in?
-            if current_user.usertype=='Manager'
+            if current_user.usertype=='manager'
                 @project=current_user.created_projects
-            elsif current_user.usertype=='Developer'
+            elsif current_user.usertype=='developer'
                 @project=current_user.assigned_projects
-            elsif current_user.usertype=='QA'
+            elsif current_user.usertype=='qa'
                 @project=current_user.assigned_projects
             end
-        else
-            flash[:alert]="You need to login to view your Projects"
-            redirect_to root_path
-        end
     end
     
     def new
@@ -39,17 +35,14 @@ class ProjectsController < ApplicationController
     end
     
     def edit
-        @project=Project.find(params[:id])
-        if can? :edit,@project
-        else
-            flash[:alert]="You are not allowed to edit the project"
-            redirect_to projects_path(@project)
+        #if can? :edit, @project
+        unless can? :edit, @project
+            flash[:danger]="You cannot edit other user's project"
+            redirect_to user_path(current_user)
         end
     end
-
     
     def update
-        @project=Project.find(params[:id])
         if @project.update(project_params)
             flash[:success]="Your Project was updated successfully"
             redirect_to projects_path
@@ -59,33 +52,31 @@ class ProjectsController < ApplicationController
     end
     
     def show
-        if user_signed_in?
-            if can? :show,Project
-            @project=Project.find(params[:id])
-            end
-        else 
-            flash[:alert]="Sorry you need to login first"
-            redirect_to root_path
+        #if can? :show, @project
+        unless can? :show, @project
+            flash[:danger]="You are not allowed to view other user's projects"
+            redirect_to projects_path
         end
     end
     
     def destroy
-        if can? :destroy,Project
-            @project=Project.find(params[:id]).destroy
-            flash[:success]="Project was deleted successfully"
+        if can? :destroy, @project
+            @project = Project.find(params[:id]).destroy
+            flash[:success] = "Project was deleted successfully"
             redirect_to projects_path , status: :see_other
+        else
+            flash[:danger] = "You cannot delete other user's projects"
         end
     end
     
     private
     
-    def project_params
-        params.require(:project).permit(:title,:description,user_ids: [])
-    end
-
-    def require_same_user
+        def project_params
+            params.require(:project).permit(:title,:description,user_ids: [])
+        end
+            
+        def set_project
+            @project = Project.find(params[:id])
+        end
     
-    end
-    
-    
-    end
+end

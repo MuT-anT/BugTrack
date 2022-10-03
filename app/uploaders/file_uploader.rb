@@ -17,8 +17,8 @@ class FileUploader < CarrierWave::Uploader::Base
     "/uploads/missing/#{model.class.to_s.underscore}/#{version_name}.png"
   end
 
-  def extension_white_list
-    %w(png)
+  def extension_allowlist
+    %w(gif png)
   end
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)

@@ -1,4 +1,4 @@
-<%=render 'shared/page_title', title: "jnfdjk"%>
+<%=render 'shared/page_title', title: "Title: #{@bug.title}"%>
 <hr/>
 
 <%if !@bug.description.blank?%>
@@ -16,15 +16,15 @@
 <%if !@bug.deadline.blank?%>
     <p><strong>Deadline: </strong><%=@bug.deadline%></p>
 <%end%>
-<p><small>Created By:   <%=link_to @bug.Bug_creator.name.capitalize,user_path(@bug.Bug_creator)%><small></p>
-<%if user_signed_in? && (current_user.usertype=='QA' && current_user.id==@bug.creator_id)%>
+<p><small>Created By:   <%=link_to @bug.bug_creator.name.capitalize,user_path(@bug.bug_creator)%><small></p>
+<%if user_signed_in? && (current_user.usertype=='qa' && current_user.id==@bug.creator_id)%>
     <div class="text-end">
             <%=link_to "Edit this Bug", edit_project_bug_path, class: "btn btn-primary btn-md btn-xlarge" %>
             <%=link_to "Delete this Bug", project_bug_path(@bug), class:"btn btn-primary btn-xs btn-xlarge", 
             data: {"turbo-method": :delete}, method: :delete%>
     </div>
 <%end%>
-<%if user_signed_in? && (current_user.usertype=='Developer' && current_user.id==@bug.solver_id)%>
+<%if user_signed_in? && (current_user.usertype=='developer' && current_user.id==@bug.solver_id)%>
     <div class="text-end">
         <%=link_to "Edit this Bug", edit_project_bug_path, class: "btn btn-primary btn-md btn-xlarge" %>
     </div>

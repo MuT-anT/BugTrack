@@ -35,7 +35,7 @@
                     <%= f.label :Assign_Developers%>
                 </div>
                 <div class="col-md-8">
-                    <%=f.select(:solver_id,@project.users.Developer.collect{|p|[ p.name,p.id]},{:prompt=>""})%>
+                    <%=f.select(:solver_id,@project.users.developer.collect{|p|[ p.name,p.id]},{:prompt=>""})%>
                 </div>
             </div>
 
@@ -52,7 +52,7 @@
             <div class="form-group">
                 <div class="col-md-6">
                     <%= f.label :BugType %>&emsp;
-                    <%= f.select :bug_type, ["Bug","Feature"] %>
+                    <%= f.select :bug_type, ["bug","feature"] %>
                 </div>
             </div>
             
