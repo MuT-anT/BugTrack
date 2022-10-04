@@ -1,33 +1,34 @@
 <%=render 'shared/page_title', title: "Title: #{@bug.title}"%>
 <hr/>
-
 <%if !@bug.description.blank?%>
-    <h3>Description:</h3>
-    <p><%=simple_format(@bug.description)%></p>
+  <h3>Description:</h3>
+  <p><%=simple_format(@bug.description)%></p>
 <%end%>
 <%if @bug.image.blank? %>
-    <h3>NO IMAGE UPLOADED</h3>
+  <h3>NO IMAGE UPLOADED</h3>
 <%else%>
-    <h3>Bug Image: </h3>
-    <p align="center"><img src="<%=@bug.image%>"width="400" height="400"</p>
+  <h3>Bug Image: </h3>
+  <p align = "center"><img src= "<%= @bug.image%>"width = "400" height = "400"</p>
 <%end%>
-<p><strong>Type: </strong><%=@bug.bug_type%></p>
-<p><strong>Status: </strong><%=@bug.bug_status%></p>
+<p><strong>Type: </strong><%= @bug.bug_type%></p>
+<p><strong>Status: </strong><%= @bug.bug_status%></p>
 <%if !@bug.deadline.blank?%>
-    <p><strong>Deadline: </strong><%=@bug.deadline%></p>
+  <p><strong>Deadline: </strong><%=@bug.deadline%></p>
 <%end%>
-<p><small>Created By:   <%=link_to @bug.bug_creator.name.capitalize,user_path(@bug.bug_creator)%><small></p>
-<%if user_signed_in? && (current_user.usertype=='qa' && current_user.id==@bug.creator_id)%>
-    <div class="text-end">
-            <%=link_to "Edit this Bug", edit_project_bug_path, class: "btn btn-primary btn-md btn-xlarge" %>
-            <%=link_to "Delete this Bug", project_bug_path(@bug), class:"btn btn-primary btn-xs btn-xlarge", 
-            data: {"turbo-method": :delete}, method: :delete%>
-    </div>
+<p><small>Created By: <%= @bug.bug_creator.name.capitalize%><small></p>
+<%if user_signed_in? && (current_user.usertype == 'qa' && current_user.id == @bug.creator_id)%>
+  <div class="text-end">
+    <%=link_to "Edit this Bug", edit_project_bug_path, class: "btn btn-primary btn-md btn-xlarge" %>
+    <%=link_to "Delete this Bug", project_bug_path(@bug), class:"btn btn-primary btn-xs btn-xlarge", 
+                                  data: {"turbo-method": :delete}, method: :delete%>
+  </div>
 <%end%>
-<%if user_signed_in? && (current_user.usertype=='developer' && current_user.id==@bug.solver_id)%>
-    <div class="text-end">
-        <%=link_to "Edit this Bug", edit_project_bug_path, class: "btn btn-primary btn-md btn-xlarge" %>
-    </div>
+<%if user_signed_in? && (current_user.usertype == 'developer' && current_user.id == @bug.solver_id)%>
+  <div class="text-end">
+    <%=link_to "Edit this Bug", edit_project_bug_path, class: "btn btn-primary btn-md btn-xlarge" %>
+  </div>
 <%end%>
 <br><hr/>
-<div class="text-center"><%=link_to "Return", project_path(@bug.project), class: "btn btn-primary btn-md btn-xlarge"%></div>
+<div class = "text-center">
+  <%= link_to "Return", project_path(@bug.project), class: "btn btn-primary btn-md btn-xlarge"%>
+</div>

@@ -10,7 +10,7 @@ class User < ApplicationRecord
   #many to many relation between users and projects
 
   has_many :user_projects, dependent: :destroy
-  has_many :assigned_projects , through: :user_projects,source: :project,dependent: :destroy
+  has_many :assigned_projects, through: :user_projects, source: :project, dependent: :destroy
 
   #one to many relation between users and projects
 
@@ -18,12 +18,13 @@ class User < ApplicationRecord
 
   #two one to many relations between user and bugs
 
-  has_many :created_bugs, class_name: "Bug",foreign_key: "creator_id" , dependent: :destroy
-  has_many :solved_bugs, class_name: "Bug",foreign_key: "solver_id" , dependent: :destroy
+  has_many :created_bugs, class_name: "Bug", foreign_key: "creator_id", dependent: :destroy
+  has_many :solved_bugs, class_name: "Bug", foreign_key: "solver_id", dependent: :destroy
 
-  has_many :bugs,through: :created_projects
+  has_many :bugs, through: :created_projects
 
-  enum usertype: {
+  enum usertype: 
+  {
     manager: 0,
     developer: 1,
     qa: 2

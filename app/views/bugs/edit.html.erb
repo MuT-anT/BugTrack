@@ -1,79 +1,70 @@
 <%=render 'shared/page_title', title: "Edit Bug"%>
 <hr/>
 <%=render 'shared/error', obj: @bug%>
-<div class="row">
-    <div class="col-md-12">
-        <%= form_for(@bug, :html => {class: "form-horizontal",role: "form"},url: project_bug_path(@project, @bug)) do |f|%>
-            <div class="form-group">
-                <div class="control-label col-md-8">
-                    <%=f.label :title%>
-                </div>
-                <div class= "col-md-6">
-                    <%= f.text_field :title , class: "form-control", placeholder: "Enter your title",autofocus: true%>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="control-label col-md-8">
-                    <%=f.label :description%>
-                </div>
-                <div class="col-md-6">
-                    <%=f.text_area :description, rows: 8, class: "form-control",placeholder: "Enter description of the bug"%>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="control-label col-md-8">
-                    <%=f.label :deadline%>
-                </div>
-                <div class="col-md-2">
-                    <%=f.date_field :deadline, class: "form-control",placeholder: "Enter deadline"%>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <div class="control-label col-md-2">
-                    <%= f.label :Assign_Developers%>
-                </div>
-                <div class="col-md-8">
-                    <%=f.select(:solver_id,@project.users.developer.collect{|p|[ p.name,p.id]},{:prompt=>""})%>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="control-label col-md-8">
-                    <%=f.label :screenshot%>
-                </div>
-                <div class="col-md-4">
-                    <%=f.file_field :image, class: "form-control"%>
-                </div>
-            </div>
-        
-            <br>
-            <div class="form-group">
-                <div class="col-md-6">
-                    <%= f.label :BugType %>&emsp;
-                    <%= f.select :bug_type, ["bug","feature"] %>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <div class="control-label col-md-4">
-                    <%=f.label :status%>&emsp;
-                </div>
-                <div class="col-md-4">
-                    <%= f.select :bug_status, ["New", "Started", "Completed"] %>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-12">
-                    <%=f.submit class: "btn btn-primary btn-md btn-xlarge"%>
-                    <%if @bug.new_record? %>
-                        <%=link_to "Return", project_path(@project), class: "btn btn-primary btn-md btn-xlarge"%>
-                    <%else%>
-                        <%=link_to "Return", project_path(@bug.project), class: "btn btn-primary btn-md btn-xlarge"%>
-                    <%end%>
-                </div>
-            </div>
-        <%end%>
-    </div>
+<div class = "row">
+  <div class = "col-md-12">
+    <%= form_for(@bug, :html => {class: "form-horizontal", role: "form"}, url: project_bug_path(@project, @bug)) do |f|%>
+      <div class = "form-group">
+        <div class = "control-label col-md-8">
+          <%=f.label :title%>
+        </div>
+        <div class = "col-md-6">
+          <%= f.text_field :title, class: "form-control", placeholder: "Enter your title", autofocus: true%>
+        </div>
+      </div>
+      <div class = "form-group">
+        <div class = "control-label col-md-8">
+          <%=f.label :description%>
+        </div>
+        <div class = "col-md-6">
+          <%=f.text_area :description, rows: 8, class: "form-control", placeholder: "Enter description of the bug"%>
+        </div>
+      </div>
+      <div class = "form-group">
+        <div class = "control-label col-md-8">
+          <%=f.label :deadline%>
+        </div>
+        <div class = "col-md-2">
+          <%=f.date_field :deadline, class: "form-control", placeholder: "Enter deadline"%>
+        </div>
+      </div>
+      <div class = "form-group">
+        <div class = "control-label col-md-2">
+          <%= f.label :Assign_Developers%>
+        </div>
+        <div class = "col-md-8">
+          <%=f.select(:solver_id, @project.users.developer.collect{|p|[ p.name, p.id]}, {:prompt=>""})%>
+        </div>
+      </div>
+      <div class = "form-group">
+        <div class = "control-label col-md-8">
+          <%=f.label :screenshot%>
+        </div>
+        <div class = "col-md-4">
+          <%=f.file_field :image, class: "form-control"%>
+        </div>
+      </div>
+      <br>
+      <div class = "form-group">
+        <div class = "col-md-6">
+          <%= f.label :BugType %>&emsp;
+          <%= f.select :bug_type, ["bug", "feature"] %>
+        </div>
+      </div> 
+      <div class = "form-group">
+        <div class = "control-label col-md-4">
+          <%=f.label :status%>&emsp;
+        </div>
+        <div class = "col-md-4">
+          <%= f.select :bug_status, ["New", "Started", "Completed"] %>
+        </div>
+      </div>
+      <div class = "form-group">
+        <div class = "col-md-offset-2 col-md-12">
+          <%=f.submit class: "btn btn-primary btn-md btn-xlarge"%>
+          <%=link_to "Return", project_bug_path(@bug), class: "btn btn-primary btn-md btn-xlarge"%>
+        </div>
+      </div>
+    <%end%>
+  </div>
 </div>

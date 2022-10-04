@@ -4,24 +4,24 @@ class Ability
   def initialize(current_user)
     current_user||=User.new
     if current_user.usertype=='manager'
-      can :create,Project 
-      can :read, Project , creator_id: current_user.id
-      can :edit, Project , creator_id: current_user.id
+      can :create, Project 
+      can :read, Project, creator_id: current_user.id
+      can :edit, Project, creator_id: current_user.id
       can :destroy, Project, creator_id: current_user.id
       can :read, Bug, creator_id: current_user.id
       can :read, User, id: current_user.id
-    elsif current_user.usertype=='developer'
+    elsif current_user.usertype == 'developer'
       can :read,Project do |project|
         project.users.include? (current_user)
       end
-      can :read,Bug, solver_id: current_user.id
+      can :read, Bug, solver_id: current_user.id
       can :update, Bug, solver_id: current_user.id
       can :read, User, id: current_user.id
     elsif current_user.usertype=='qa'
       can :read, Project do |project|
         project.users.include? (current_user)
       end
-      can :create, Bug, creator_id: current_user.id
+      can :create, Bug
       can :read, Bug, creator_id: current_user.id
       can :update, Bug, creator_id: current_user.id
       can :destroy, Bug, creator_id: current_user.id
